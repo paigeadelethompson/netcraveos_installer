@@ -29,7 +29,7 @@ EOF
 [ $# -ne 1 ]     && echo "Please provide required args" && usage && exit 1
 [ -z "${DISK}" ] && echo "Please provide a disk"        && usage && exit 1
 
-PART="${DISK}1"
+PART="${DISK}p1"
 
 echo "Getting ISO"
 wget --continue -O "${DIRNAME}/${ISO_NAME}" "${REMOTE_ISO}"
