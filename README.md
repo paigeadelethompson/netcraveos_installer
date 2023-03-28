@@ -9,11 +9,11 @@ This image will erase anything already installed, use with caution.
 - Add an SSH key to the image:
 ```
 sudo losetup -P -f installer.bin
-mount mount -t vfat /dev/loop0p4 /mnt
+sudo mount mount -t vfat /dev/loop0p4 /mnt
 ssh-keygen -t ed25519 -f ~/id_netcrave_installer 
-cp ~/id_netcrave_installer.pub /mnt/keys 
-umount /mnt
-losetup -d /dev/loop0
+sudo cp ~/id_netcrave_installer.pub /mnt/keys 
+sudo umount /mnt
+sudo losetup -d /dev/loop0
 ```
 - Start QEMU with usermode networking and SD card emulation. This is a similar configuration to the zimaboard's hardware. You should only need `qemu-system-x86_64` and OVMF installed for this to work:
 ```
