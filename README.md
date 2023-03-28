@@ -30,3 +30,6 @@ qemu-system-x86_64                                     \
 -netdev user,id=user0                                  \
 -net nic                                               \
 -netdev hubport,hubid=0,id=port2,netdev=user0
+
+## Network console 
+The installer image will request `netcraveos.local` from the DHCP server and mDNS should resolve to it's DHCP leased address, in a perfect scenario: `ssh -i ~/.ssh/id_netcrave_installer root@netcraveos.local` 
