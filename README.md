@@ -2,7 +2,7 @@
 This image will erase anything already installed, use with caution. 
 
 # How to create a bootable USB drive
-- `dd if=installer.bin of=/dev/sdX bs=4M` where `sdX` is the device node of your USB drive, see `cat /proc/partitions`
+- `dd if=installer.bin of=/dev/sdX bs=1M` where `sdX` is the device node of your USB drive, see `cat /proc/partitions`
 - The fourth partition in the image/on the USB drive is storage for SSH keys, it should mount on Linux or Windows and they will be installed to `/root/.ssh/authorized_keys`
 # Testing
 - Create a 32GB virtual disk `# qemu-img create -f qcow2 hdd.qcow2 32G` 
