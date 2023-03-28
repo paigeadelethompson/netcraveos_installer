@@ -39,8 +39,14 @@ ISO="${DIRNAME}/${ISO_NAME}"
 
 sfdisk -f "${DISK}" < partition.table
 
-echo "Creating a filesystem on ${PART}"
-mkfs.ext2 "${PART}"
+echo "Creating a filesystem on ${EFI}"
+mkfs.vfat "${EFI}"
+
+echo "Creating a filesystem on ${ROOT}"
+mkfs.ext2 "${ROOT}"
+
+echo "Creating a filesystem on ${KEYS}"
+mkfs.ext2 "${KEYS}"
 
 mkdir -p /mnt/usb/
 mount "${ROOT}" /mnt/usb
