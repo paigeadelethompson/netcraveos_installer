@@ -34,3 +34,5 @@ qemu-system-x86_64                                     \
 -net nic                                               \
 -netdev hubport,hubid=0,id=port2,netdev=user0
 ```
+## Problems 
+There is no DXE for `sdhci-pci` on OVMF. Installing to it is possible but booting from it is not; have to use `-device file=hdd.qcow2` to boot it. 
