@@ -11,8 +11,9 @@ This image will erase anything already installed, use with caution.
 qemu-system-x86_64                                     \
 -nographic                                             \
 -nodefaults                                            \
--serial mon:stdio                                      \
--m 1024M                                               \
+-serial stdio.                                         \
+-smp 4                                                 \
+-m 3840M                                               \
 -drive file=installer.bin                              \
 -drive id=mysdcard,if=none,format=qcow2,file=hdd.qcow2 \
 -device sdhci-pci -device sd-card,drive=mysdcard       \
