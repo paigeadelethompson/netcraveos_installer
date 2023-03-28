@@ -36,8 +36,8 @@ wget --continue -O "${DIRNAME}/${ISO_NAME}" "${REMOTE_ISO}"
 ISO="${DIRNAME}/${ISO_NAME}"
 
 parted ${DISK} mklabel gpt 
-parted ${DISK} mkpart primary fat32 1 50
-parted ${DISK} mkpart primary ext2 51 500
+parted ${DISK} mkpart primary fat32 1 100
+parted ${DISK} mkpart primary ext2 101 500
 parted ${DISK} mkpart primary fat32 501 -1
 parted ${DISK} set 1 boot on
 
