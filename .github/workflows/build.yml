@@ -23,7 +23,7 @@ jobs:
         DEBIAN_VERSION: 11.6.0 
         ARCH: amd64 
     - name: Add custom preseed.cfg
-      run: sudo mount /dev/loop254p1 /mnt/usb && sudo cp preseed.cfg /mnt/usb/preseed && sudo umount /mnt/usb
+      run: sudo mount /dev/loop254p2 /mnt/usb && sudo cp preseed.cfg /mnt/usb/preseed && sudo umount /mnt/usb
     - name: Disconnect installer.bin
       run: sudo losetup -d /dev/loop254 
     - name: sha256sum installer.bin

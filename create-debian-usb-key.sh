@@ -29,29 +29,30 @@ EOF
 [ $# -ne 1 ]     && echo "Please provide required args" && usage && exit 1
 [ -z "${DISK}" ] && echo "Please provide a disk"        && usage && exit 1
 
-PART="${DISK}p1"
+EFI="${DISK}p1"
+ROOT="${DISK}p2"
+KEYS="${DISK}p1"
 
 echo "Getting ISO"
 wget --continue -O "${DIRNAME}/${ISO_NAME}" "${REMOTE_ISO}"
 ISO="${DIRNAME}/${ISO_NAME}"
 
-echo "Wiping out beginning of ${DISK}"
-dd if=/dev/zero of="${DISK}" bs=10M count=5
-
-echo "Preparing disk partitions"
-(echo n; echo p; echo 1; echo ; echo ; echo w) | fdisk "${DISK}"
-partx -u ${DISK}
+sfdisk -d "${DISK}" < partition.table
 
 echo "Creating a filesystem on ${PART}"
 mkfs.ext2 "${PART}"
 
-mkdir -p /mnt/usb
-mount "${PART}" /mnt/usb
-grub-install --root-directory=/mnt/usb "${DISK}"
+mkdir -p /mnt/usb/
+mount "${ROOT}" /mnt/usb
+mkdir -p /mnt/usb/boot/efi
+mount "${EFI}" /mnt/usb/boot/efi
+
+grub-install --target=x86_64-efi --root-directory=/mnt/usb/boot/efi "${DISK}"
+grub-install --target=x86_64-efi "${DISK}" --efi-directory=/mnt/usb/boot/efi --boot-directory=/mnt/usb/boot
 
 echo "Download the initrd image"
 mkdir "/mnt/usb/hdmedia-${DEBIAN_RELEASE}"
-wget -O "/mnt/usb/hdmedia-${DEBIAN_RELEASE}/vmlinuz"   "${DEBIAN_MIRROR}/debian/dists/${DEBIAN_RELEASE}/main/installer-${ARCH}/current/images/hd-media/vmlinuz"
+wget -O "/mnt/usb/hdmedia-${DEBIAN_RELEASE}/vmlinuz" "${DEBIAN_MIRROR}/debian/dists/${DEBIAN_RELEASE}/main/installer-${ARCH}/current/images/hd-media/vmlinuz"
 wget -O "/mnt/usb/hdmedia-${DEBIAN_RELEASE}/initrd.gz" "${DEBIAN_MIRROR}/debian/dists/${DEBIAN_RELEASE}/main/installer-${ARCH}/current/images/hd-media/initrd.gz"
 mkdir -p /mnt/usb/isos
 rsync -aP "${ISO}" /mnt/usb/isos
@@ -63,7 +64,7 @@ set preseed="/hd-media/preseed"
 set iso="/isos/${ISO_NAME}"
 
 menuentry "Debian ${DEBIAN_RELEASE} ${ARCH} auto install" {
-  linux  \$hdmedia/vmlinuz iso-scan/filename=\$iso priority=critical auto=true preseed/file=\$preseed/debian.preseed console=ttyS0,115200n8 console=tty0
+  linux  \$hdmedia/vmlinuz iso-scan/filename=\$iso priority=critical auto=true preseed/file=\$preseed/debian.preseed console=tty0 console=ttyS0,115200n8
   initrd \$hdmedia/initrd.gz
 }
 EOF

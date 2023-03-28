@@ -1,0 +1,11 @@
+label: gpt
+label-id: 36250D82-5CC5-495B-AF5B-D48AA3A681E6
+device: /dev/loop0
+unit: sectors
+first-lba: 34
+last-lba: 1048542
+sector-size: 512
+
+/dev/loop0p1 : start=        2048, size=       96256, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B, uuid=A80A3AE6-DFA2-4775-998E-068F471464BB, name="EFI"
+/dev/loop0p2 : start=      100352, size=      876544, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, uuid=31D0821C-8B24-4A5A-AA96-DE446CBDBE7B, name="INSTALLER"
+/dev/loop0p3 : start=      976896, size=       22528, type=EBD0A0A2-B9E5-4433-87C0-68B6B72699C7, uuid=737256D4-1DCF-43C9-B936-38FCC27C03C4, name="KEYS"
