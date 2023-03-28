@@ -44,8 +44,8 @@ jobs:
       with:
         draft: true
         prerelease: false
-        release_name: ${{ DEBIAN_VERSION }}_${{ ARCH }}
-        tag_name: ${{ DEBIAN_VERSION }}_${{ ARCH }}
+        release_name: ${{ env.DEBIAN_VERSION }}_${{ env.ARCH }}
+        tag_name: ${{ env.DEBIAN_VERSION }}_${{ env.ARCH }}
       env:
         GITHUB_TOKEN: ${{ github.token }}
     - name: Upload zipped image to release artifacts
