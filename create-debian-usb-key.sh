@@ -72,12 +72,14 @@ rsync -aP "${ISO}" /mnt/isos
 
 echo "Create grub config file"
 cat << EOF > /mnt/boot/grub/grub.cfg
+set timeout_style=menu
+set timeout=5
 set hdmedia="/hdmedia-${DEBIAN_RELEASE}"
 set preseed="/hd-media/preseed"
 set iso="/isos/${ISO_NAME}"
 
 menuentry "Debian ${DEBIAN_RELEASE} ${ARCH} auto install" {
-  linux  \$hdmedia/vmlinuz iso-scan/filename=\$iso priority=critical auto=true preseed/file=\$preseed/debian.preseed console=tty0 console=ttyS0,115200n8
+  linux  \$hdmedia/vmlinuz iso-scan/filename=\$iso priority=critical auto=true preseed/file=\$preseed/preseed.cfg console=tty0 console=ttyS0,115200n8 DEBIAN_FRONTEND=text DEBCONF_DEBUG=5
   initrd \$hdmedia/initrd.gz
 }
 EOF
