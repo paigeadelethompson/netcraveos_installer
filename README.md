@@ -16,4 +16,4 @@ qemu-system-x86_64                                     \
 -netdev user,id=user0                                  \
 -net nic                                               \
 -netdev hubport,hubid=0,id=port2,netdev=user0          \
--vga virtio`
+-vga virtio
