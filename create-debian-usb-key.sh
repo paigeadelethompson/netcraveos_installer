@@ -29,7 +29,7 @@ EOF
 
 EFI="${DISK}p1"
 ROOT="${DISK}p2"
-KEYS="${DISK}p1"
+KEYS="${DISK}p3"
 
 echo "Getting ISO"
 wget --continue -O "${DIRNAME}/${ISO_NAME}" "${REMOTE_ISO}"
@@ -40,6 +40,8 @@ parted ${DISK} mkpart primary fat32 1 100
 parted ${DISK} mkpart primary ext2 101 500
 parted ${DISK} mkpart primary fat32 501 -1
 parted ${DISK} set 1 boot on
+
+parted ${DISK} print
 
 echo "Creating a filesystem on ${EFI}"
 mkfs.vfat -F32 "${EFI}"
