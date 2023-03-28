@@ -73,7 +73,7 @@ rsync -aP "${ISO}" /mnt/isos
 echo "Create grub config file"
 cat << EOF > /mnt/boot/grub/grub.cfg
 set timeout_style=menu
-set timeout=5
+set timeout=1
 set hdmedia="/hdmedia-${DEBIAN_RELEASE}"
 set preseed="/hd-media/preseed"
 set iso="/isos/${ISO_NAME}"
