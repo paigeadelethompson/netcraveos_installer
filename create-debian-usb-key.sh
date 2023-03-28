@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e -x -o pipefail
-
 DIRNAME="$(dirname $0)"
 
 DISK="$1"
@@ -37,7 +35,11 @@ echo "Getting ISO"
 wget --continue -O "${DIRNAME}/${ISO_NAME}" "${REMOTE_ISO}"
 ISO="${DIRNAME}/${ISO_NAME}"
 
-sfdisk -f "${DISK}" < partition.table
+parted ${DISK} mklabel gpt 
+parted ${DISK} mkpart primary fat32 1 50
+parted ${DISK} mkpart primary ext2 51 500
+parted ${DISK} mkpart primary fat32 501 -1
+parted ${DISK} set 1 boot on
 
 echo "Creating a filesystem on ${EFI}"
 mkfs.vfat -F32 "${EFI}"
@@ -48,24 +50,22 @@ mkfs.ext2 "${ROOT}"
 echo "Creating a filesystem on ${KEYS}"
 mkfs.ext2 "${KEYS}"
 
-mkdir -p /mnt/usb/
-mount "${ROOT}" /mnt/usb
-mkdir -p /mnt/usb/boot/efi
-mount "${EFI}" /mnt/usb/boot/efi
+mkdir -p /mnt/
+mount "${ROOT}" /mnt/
+mkdir -p /mnt/boot/efi
+mount "${EFI}" /mnt/boot/efi
 
-parted ${DISK} set 1 boot on
-
-grub-install --target=x86_64-efi "${DISK}" --efi-directory=/mnt/usb/boot/efi --boot-directory=/mnt/usb/boot
+grub-install --target=x86_64-efi "${DISK}" --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot
 
 echo "Download the initrd image"
-mkdir "/mnt/usb/hdmedia-${DEBIAN_RELEASE}"
-wget -O "/mnt/usb/hdmedia-${DEBIAN_RELEASE}/vmlinuz" "${DEBIAN_MIRROR}/debian/dists/${DEBIAN_RELEASE}/main/installer-${ARCH}/current/images/hd-media/vmlinuz"
-wget -O "/mnt/usb/hdmedia-${DEBIAN_RELEASE}/initrd.gz" "${DEBIAN_MIRROR}/debian/dists/${DEBIAN_RELEASE}/main/installer-${ARCH}/current/images/hd-media/initrd.gz"
-mkdir -p /mnt/usb/isos
-rsync -aP "${ISO}" /mnt/usb/isos
+mkdir "/mnt/hdmedia-${DEBIAN_RELEASE}"
+wget -O "/mnt/hdmedia-${DEBIAN_RELEASE}/vmlinuz" "${DEBIAN_MIRROR}/debian/dists/${DEBIAN_RELEASE}/main/installer-${ARCH}/current/images/hd-media/vmlinuz"
+wget -O "/mnt/hdmedia-${DEBIAN_RELEASE}/initrd.gz" "${DEBIAN_MIRROR}/debian/dists/${DEBIAN_RELEASE}/main/installer-${ARCH}/current/images/hd-media/initrd.gz"
+mkdir -p /mnt/isos
+rsync -aP "${ISO}" /mnt/isos
 
 echo "Create grub config file"
-cat << EOF > /mnt/usb/boot/grub/grub.cfg
+cat << EOF > /mnt/boot/grub/grub.cfg
 set hdmedia="/hdmedia-${DEBIAN_RELEASE}"
 set preseed="/hd-media/preseed"
 set iso="/isos/${ISO_NAME}"
@@ -76,8 +76,8 @@ menuentry "Debian ${DEBIAN_RELEASE} ${ARCH} auto install" {
 }
 EOF
 
-mkdir /mnt/usb/preseed
-cat << EOF > /mnt/usb/preseed/debian.preseed
+mkdir /mnt/preseed
+cat << EOF > /mnt/preseed/debian.preseed
 d-i debian-installer/locale           string   en_US
 d-i keyboard-configuration/xkb-keymap select   us
 d-i console-tools/archs               select   skip-config
@@ -215,4 +215,7 @@ d-i                finish-install/reboot_in_progress note
 EOF
 
 sync
-umount /mnt/usb
+
+umount /mnt/boot/efi
+umount /mnt/
+
