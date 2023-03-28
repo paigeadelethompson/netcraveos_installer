@@ -10,7 +10,7 @@ This image will erase anything already installed, use with caution.
 ```
 sudo losetup -P -f installer.bin
 sudo mount mount -t vfat /dev/loop0p4 /mnt
-ssh-keygen -t ed25519 -f ~/id_netcrave_installer 
+ssh-keygen -t ed25519 -f ~/.ssh/id_netcrave_installer 
 sudo cp ~/.ssh/id_netcrave_installer.pub /mnt/keys 
 sudo umount /mnt
 sudo losetup -d /dev/loop0
