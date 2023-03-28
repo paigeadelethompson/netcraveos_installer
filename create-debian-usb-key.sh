@@ -27,9 +27,9 @@ EOF
 [ $# -ne 1 ]     && echo "Please provide required args" && usage && exit 1
 [ -z "${DISK}" ] && echo "Please provide a disk"        && usage && exit 1
 
-EFI="${DISK}p1"
-ROOT="${DISK}p2"
-KEYS="${DISK}p3"
+EFI="${DISK}p2"
+ROOT="${DISK}p3"
+KEYS="${DISK}p4"
 
 echo "Getting ISO"
 wget --continue -O "${DIRNAME}/${ISO_NAME}" "${REMOTE_ISO}"
