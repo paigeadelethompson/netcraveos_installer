@@ -1,4 +1,4 @@
-name: Build NetcraveOS
+name: "Build NetcraveOS"
 
 on:
   workflow_dispatch:
@@ -32,7 +32,24 @@ jobs:
       run: sha256sum installer.bin > installer.bin.sha256sum 
     - name: Move into directory
       run:  mkdir netcrave_os_installer && mv installer.* netcrave_os_installer/
-    - uses: actions/upload-artifact@v3
+    - name: Archive directory
+      run: zip -r netcrave_os_installer.zip netcrave_os_installer
+    - name: release
+      uses: actions/create-release@v1
+      id: create_release
       with:
-        name: netcraveos-installer
-        path: netcrave_os_installer
+        draft: true
+        prerelease: false
+        release_name: "latest"
+        tag_name: ${{ github.ref }}
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+    - name: upload linux artifact
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./netcrave_os_installer.zip
+        asset_name: netcrave_os_installer.zip
+        asset_content_type: application/zip
