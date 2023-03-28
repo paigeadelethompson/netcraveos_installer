@@ -37,7 +37,7 @@ echo "Getting ISO"
 wget --continue -O "${DIRNAME}/${ISO_NAME}" "${REMOTE_ISO}"
 ISO="${DIRNAME}/${ISO_NAME}"
 
-sfdisk -d "${DISK}" < partition.table
+sfdisk -f "${DISK}" < partition.table
 
 echo "Creating a filesystem on ${PART}"
 mkfs.ext2 "${PART}"
