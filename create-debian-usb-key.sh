@@ -40,7 +40,7 @@ dd if=/dev/zero of="${DISK}" bs=10M count=5
 
 echo "Preparing disk partitions"
 (echo n; echo p; echo 1; echo ; echo ; echo w) | fdisk "${DISK}"
-partx -u /dev/sdb
+partx -u ${DISK}
 
 echo "Creating a filesystem on ${PART}"
 mkfs.ext2 "${PART}"
