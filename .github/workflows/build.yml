@@ -19,7 +19,7 @@ jobs:
     - name: Mount installer.bin as loopback device
       run: sudo losetup -P -f installer.bin
     - name: Build base installer image
-      run: sudo ./create-debian-usb-key.sh /dev/loop0
+      run: chmod +x create-debian-usb-key.sh && sudo ./create-debian-usb-key.sh /dev/loop0
     - name: Add custom preseed.cfg
       run: mount /dev/loop0p1 /mnt/usb && cp preseed.cfg /mnt/usb/preseed && umount /mnt/usb
     - name: Disconnect installer.bin
