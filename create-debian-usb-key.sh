@@ -55,7 +55,7 @@ mount "${EFI}" /mnt/usb/boot/efi
 
 parted ${DISK} set 1 boot on
 
-grub-install --target=x86_64-efi "${DISK}" --efi-directory=/mnt/usb/boot/efi --boot-directory=/mnt/usb/boot
+grub-install "${DISK}" --efi-directory=/mnt/usb/boot/efi --boot-directory=/mnt/usb/boot
 
 echo "Download the initrd image"
 mkdir "/mnt/usb/hdmedia-${DEBIAN_RELEASE}"
