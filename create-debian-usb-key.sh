@@ -36,10 +36,12 @@ wget --continue -O "${DIRNAME}/${ISO_NAME}" "${REMOTE_ISO}"
 ISO="${DIRNAME}/${ISO_NAME}"
 
 parted ${DISK} mklabel gpt 
-parted ${DISK} mkpart primary fat32 1 100
+parted ${DISK} mkpart primary fat32 1 2
+parted ${DISK} set 1 bios_grub on
+parted ${DISK} mkpart primary fat32 2 100
 parted ${DISK} mkpart primary ext2 100 600
 parted ${DISK} mkpart primary fat32 600 629
-parted ${DISK} set 1 boot on
+parted ${DISK} set 2 boot on
 
 echo "Creating a filesystem on ${EFI}"
 mkfs.vfat -F32 "${EFI}"
