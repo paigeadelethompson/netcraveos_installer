@@ -10,6 +10,8 @@ jobs:
     - uses: actions/checkout@v3
       with:
         submodules: true
+    - name: Install grub EFI
+      run: sudo apt update ; sudo apt -y install grub-efi
     - name: Create installer.bin
       run: truncate -s 512M installer.bin
     - name: Create installer.bin
