@@ -5,7 +5,7 @@ This image will erase anything already installed, use with caution.
 - `dd if=installer.bin of=/dev/sdX bs=1M` where `sdX` is the device node of your USB drive, see `cat /proc/partitions`
 - The fourth partition in the image/on the USB drive is storage for SSH keys, it should mount on Linux or Windows. When the installer is run on the device, they will be installed to `/root/.ssh/authorized_keys`
 # Network installer console 
-The installer image will request `netcraveos.local` from the DHCP server and mDNS should resolve to it's DHCP leased address, in a perfect scenario: `ssh installer@netcraveos.local`. If you're using QEMU, use `ssh installer localhost -p 65534` to connect instead. The password is `IDontWantDebian`
+The installer image will request `netcraveos.local` from the DHCP server and mDNS should resolve to it's DHCP leased address, in a perfect scenario: `ssh installer@netcraveos.local`. If you're using QEMU, use `ssh installer localhost -p 65534` to connect instead. The password is `Netcr4veC0mmunication$`
 # Testing
 - Create a 32GB virtual disk `qemu-img create -f qcow2 hdd.qcow2 32G` 
 - Add an SSH key to the image:
