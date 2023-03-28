@@ -1,0 +1,34 @@
+name: build kernel
+
+on:
+  workflow_dispatch:
+env:
+  DEBIAN_RELEASE: bullseye 
+  DEBIAN_VERSION: 11.6.0 
+  ARCH: amd64 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: true
+    - name: Create installer.bin
+      run: truncate -s 512M installer.bin
+    - name: Mount installer.bin as loopback device
+      run: sudo losetup -P -f installer.bin
+    - name: Build base installer image
+      run: sudo ./create-debian-usb-key.sh /dev/loop0
+    - name: Add custom preseed.cfg
+      run: mount /dev/loop0p1 /mnt/usb && cp preseed.cfg /mnt/usb/preseed && umount /mnt/usb
+    - name: Disconnect installer.bin
+      run: losetup -d /dev/loop0 
+    - name: sha256sum installer.bin
+      run: sha256sum installer.bin > installer.bin.sha256sum 
+    - name: Move into directory
+      run:  mkdir netcrave_os_installer && mv installer.bin.* netcrave_os_installer/
+    - uses: actions/upload-artifact@v3
+      with:
+        name: netcraveos-installer
+        path: netcrave_os_installer
