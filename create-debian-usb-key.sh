@@ -48,7 +48,7 @@ echo "Creating a filesystem on ${ROOT}"
 mkfs.ext2 "${ROOT}"
 
 echo "Creating a filesystem on ${KEYS}"
-mkfs.ext2 "${KEYS}"
+mkfs.vfat -F32 "${KEYS}"
 
 parted ${DISK} print
 
