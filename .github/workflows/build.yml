@@ -3,6 +3,11 @@ name: "Build NetcraveOS"
 on:
   workflow_dispatch:
 
+env:
+  DEBIAN_RELEASE: bullseye 
+  DEBIAN_VERSION: 11.6.0 
+  ARCH: amd64 
+
 jobs:
   build:
     permissions:
@@ -23,10 +28,6 @@ jobs:
       run: sudo losetup -P /dev/loop254 installer.bin
     - name: Build base installer image
       run: chmod +x create-debian-usb-key.sh && sudo DEBIAN_RELEASE=$DEBIAN_RELEASE DEBIAN_VERSION=$DEBIAN_VERSION ARCH=$ARCH ./create-debian-usb-key.sh /dev/loop254
-      env:
-        DEBIAN_RELEASE: bullseye 
-        DEBIAN_VERSION: 11.6.0 
-        ARCH: amd64 
     - name: Add custom preseed.cfg
       run: sudo mount /dev/loop254p3 /mnt && sudo cp preseed.cfg /mnt/preseed && sudo umount /mnt
     - name: Disconnect installer.bin
@@ -44,7 +45,7 @@ jobs:
         draft: true
         prerelease: false
         release_name: "latest"
-        tag_name: ${{ github.ref }}
+        tag_name: $DEBIAN_RELEASE_$DEBIAN_VERSION_$ARCH
       env:
         GITHUB_TOKEN: ${{ github.token }}
     - name: upload linux artifact
