@@ -53,7 +53,6 @@ mount "${ROOT}" /mnt/usb
 mkdir -p /mnt/usb/boot/efi
 mount "${EFI}" /mnt/usb/boot/efi
 
-grub-install --target=x86_64-efi --root-directory=/mnt/usb/boot/efi "${DISK}"
 grub-install --target=x86_64-efi "${DISK}" --efi-directory=/mnt/usb/boot/efi --boot-directory=/mnt/usb/boot
 
 echo "Download the initrd image"
