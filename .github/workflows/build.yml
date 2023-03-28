@@ -44,8 +44,8 @@ jobs:
       with:
         draft: true
         prerelease: false
-        release_name: ${{ DEBIAN_RELEASE }}_${{ DEBIAN_VERSION }}_${{ ARCH }}
-        tag_name: ${{ DEBIAN_RELEASE }}_${{ DEBIAN_VERSION }}_${{ ARCH }}
+        release_name: ${{ DEBIAN_VERSION }}_${{ ARCH }}
+        tag_name: ${{ DEBIAN_VERSION }}_${{ ARCH }}
       env:
         GITHUB_TOKEN: ${{ github.token }}
     - name: upload linux artifact
