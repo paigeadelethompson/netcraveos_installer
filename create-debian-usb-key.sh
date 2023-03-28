@@ -40,7 +40,7 @@ ISO="${DIRNAME}/${ISO_NAME}"
 sfdisk -f "${DISK}" < partition.table
 
 echo "Creating a filesystem on ${EFI}"
-mkfs.vfat "${EFI}"
+mkfs.vfat -F32 "${EFI}"
 
 echo "Creating a filesystem on ${ROOT}"
 mkfs.ext2 "${ROOT}"
