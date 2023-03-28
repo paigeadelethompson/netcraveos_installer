@@ -57,7 +57,9 @@ mount "${ROOT}" /mnt/
 mkdir -p /mnt/boot/efi
 mount "${EFI}" /mnt/boot/efi
 
-grub-install --target=x86_64-efi "${DISK}" --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot
+#grub-install --target=x86_64-efi "${DISK}" --efi-directory=/mnt/boot/efi --boot-directory=/mnt/boot
+
+grub-install "${DISK}" --boot-directory=/mnt/boot
 
 echo "Download the initrd image"
 mkdir "/mnt/hdmedia-${DEBIAN_RELEASE}"
