@@ -2,10 +2,6 @@ name: Build NetcraveOS
 
 on:
   workflow_dispatch:
-env:
-  DEBIAN_RELEASE: bullseye 
-  DEBIAN_VERSION: 11.6.0 
-  ARCH: amd64 
 
 jobs:
   build:
@@ -19,7 +15,11 @@ jobs:
     - name: Mount installer.bin as loopback device
       run: sudo losetup -P -f installer.bin
     - name: Build base installer image
-      run: chmod +x create-debian-usb-key.sh && sudo ./create-debian-usb-key.sh /dev/loop0
+      run: chmod +x create-debian-usb-key.sh sudo -E ./create-debian-usb-key.sh /dev/loop0
+      env:
+        DEBIAN_RELEASE: bullseye 
+        DEBIAN_VERSION: 11.6.0 
+        ARCH: amd64 
     - name: Add custom preseed.cfg
       run: mount /dev/loop0p1 /mnt/usb && cp preseed.cfg /mnt/usb/preseed && umount /mnt/usb
     - name: Disconnect installer.bin
