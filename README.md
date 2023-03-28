@@ -6,6 +6,15 @@ This image will erase anything already installed, use with caution.
 - The fourth partition in the image/on the USB drive is storage for SSH keys, it should mount on Linux or Windows. When the installer is run on the device, they will be installed to `/root/.ssh/authorized_keys`
 # Testing
 - Create a 32GB virtual disk `qemu-img create -f qcow2 hdd.qcow2 32G` 
+- Add an SSH key to the image:
+```
+sudo losetup -P -f installer.bin
+mount mount -t vfat /dev/loop0p4 /mnt
+ssh-keygen -t ed25519 -f ~/id_netcrave_installer 
+cp ~/id_netcrave_installer.pub /mnt/keys 
+umount /mnt
+losetup -d /dev/loop0
+```
 - Start QEMU with usermode networking and SD card emulation. This is a similar configuration to the zimaboard's hardware. You should only need `qemu-system-x86_64` and OVMF installed for this to work:
 ```
 qemu-system-x86_64                                     \
