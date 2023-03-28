@@ -15,7 +15,7 @@ jobs:
     - name: Mount installer.bin as loopback device
       run: sudo losetup -P -f installer.bin
     - name: Build base installer image
-      run: chmod +x create-debian-usb-key.sh sudo DEBIAN_RELEASE=$DEBIAN_RELEASE DEBIAN_VERSION=$DEBIAN_VERSION ARCH=$ARCH ./create-debian-usb-key.sh /dev/loop0
+      run: chmod +x create-debian-usb-key.sh && sudo DEBIAN_RELEASE=$DEBIAN_RELEASE DEBIAN_VERSION=$DEBIAN_VERSION ARCH=$ARCH ./create-debian-usb-key.sh /dev/loop0
       env:
         DEBIAN_RELEASE: bullseye 
         DEBIAN_VERSION: 11.6.0 
