@@ -62,12 +62,8 @@ set hdmedia="/hdmedia-${DEBIAN_RELEASE}"
 set preseed="/hd-media/preseed"
 set iso="/isos/${ISO_NAME}"
 
-menuentry "Debian ${DEBIAN_RELEASE} ${ARCH} manual install" {
-  linux  \$hdmedia/vmlinuz iso-scan/filename=\$iso priority=critical
-  initrd \$hdmedia/initrd.gz
-}
 menuentry "Debian ${DEBIAN_RELEASE} ${ARCH} auto install" {
-  linux  \$hdmedia/vmlinuz iso-scan/filename=\$iso priority=critical auto=true preseed/file=\$preseed/debian.preseed
+  linux  \$hdmedia/vmlinuz iso-scan/filename=\$iso priority=critical auto=true preseed/file=\$preseed/debian.preseed console=ttyS0,115200n8 console=tty0
   initrd \$hdmedia/initrd.gz
 }
 EOF
