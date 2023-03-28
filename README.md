@@ -15,7 +15,7 @@ sudo cp ~/.ssh/id_netcrave_installer.pub /mnt/keys
 sudo umount /mnt
 sudo losetup -d /dev/loop0
 ```
-- Start QEMU with usermode networking and SD card emulation. This is a similar configuration to the zimaboard's hardware. You should only need `qemu-system-x86_64` and OVMF installed for this to work. OVMF is typically installed along-side `qemu-system-x86_64` so you only need to locate it. It's typically located in `/usr/share/ovmf` or `/usr/share/OVMF`:
+- Start QEMU with usermode networking and SD card emulation. This is a similar configuration to the zimaboard's hardware. You should only need `qemu-system-x86_64` and OVMF installed for this to work. OVMF is typically installed along-side `qemu-system-x86_64` so you only need to locate it. It's typically located in `/usr/share/ovmf` or `/usr/share/OVMF`. This does not require X11 and uses the serial port as a TTY and works in terminals: 
 ```
 qemu-system-x86_64                                     \
 -nographic                                             \
