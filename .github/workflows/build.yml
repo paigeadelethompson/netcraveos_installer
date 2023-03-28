@@ -13,7 +13,7 @@ jobs:
     - name: Install grub EFI
       run: sudo apt update ; sudo apt -y install grub-efi
     - name: Create installer.bin
-      run: truncate -s 512M installer.bin
+      run: truncate -s 600M installer.bin
     - name: Create installer.bin
       run: sudo mknod -m 0660 /dev/loop254 b 7 254
     - name: Mount installer.bin as loopback device
