@@ -11,7 +11,7 @@ This image will erase anything already installed, use with caution.
 qemu-system-x86_64                                     \
 -nographic                                             \
 -nodefaults                                            \
--serial stdio.                                         \
+-serial stdio                                          \
 -smp 4                                                 \
 -m 3840M                                               \
 -drive file=installer.bin                              \
