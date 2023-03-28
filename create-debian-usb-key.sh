@@ -37,8 +37,8 @@ ISO="${DIRNAME}/${ISO_NAME}"
 
 parted ${DISK} mklabel gpt 
 parted ${DISK} mkpart primary fat32 1 100
-parted ${DISK} mkpart primary ext2 101 500
-parted ${DISK} mkpart primary fat32 501 537
+parted ${DISK} mkpart primary ext2 100 600
+parted ${DISK} mkpart primary fat32 600 629
 parted ${DISK} set 1 boot on
 
 echo "Creating a filesystem on ${EFI}"
