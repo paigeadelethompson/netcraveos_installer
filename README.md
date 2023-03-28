@@ -6,6 +6,7 @@
 - Start QEMU, you should only need `qemu-system-x86_64` and OVMF installed for this to work:
 ```
 qemu-system-x86_64                                     \
+-nographic                                             \
 -nodefaults                                            \
 -serial mon:stdio                                      \
 -m 1024M                                               \
@@ -15,5 +16,4 @@ qemu-system-x86_64                                     \
 -bios /usr/share/OVMF/OVMF_CODE.fd                     \
 -netdev user,id=user0                                  \
 -net nic                                               \
--netdev hubport,hubid=0,id=port2,netdev=user0          \
--vga virtio
+-netdev hubport,hubid=0,id=port2,netdev=user0
