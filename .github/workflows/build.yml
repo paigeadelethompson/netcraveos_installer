@@ -37,7 +37,7 @@ jobs:
       run:  mkdir netcrave_os_installer && mv installer.* netcrave_os_installer/
     - name: Archive directory
       run: zip -r netcrave_os_installer.zip netcrave_os_installer
-    - name: release
+    - name: Create GH release
       uses: actions/create-release@v1
       id: create_release
       with:
