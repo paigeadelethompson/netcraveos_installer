@@ -38,10 +38,8 @@ ISO="${DIRNAME}/${ISO_NAME}"
 parted ${DISK} mklabel gpt 
 parted ${DISK} mkpart primary fat32 1 100
 parted ${DISK} mkpart primary ext2 101 500
-parted ${DISK} mkpart primary fat32 501 -1
+parted ${DISK} mkpart primary fat32 501 537
 parted ${DISK} set 1 boot on
-
-parted ${DISK} print
 
 echo "Creating a filesystem on ${EFI}"
 mkfs.vfat -F32 "${EFI}"
@@ -51,6 +49,8 @@ mkfs.ext2 "${ROOT}"
 
 echo "Creating a filesystem on ${KEYS}"
 mkfs.ext2 "${KEYS}"
+
+parted ${DISK} print
 
 mkdir -p /mnt/
 mount "${ROOT}" /mnt/
