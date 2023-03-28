@@ -48,7 +48,7 @@ jobs:
         tag_name: ${{ DEBIAN_VERSION }}_${{ ARCH }}
       env:
         GITHUB_TOKEN: ${{ github.token }}
-    - name: upload linux artifact
+    - name: Upload zipped image to release artifacts
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ github.token }}
