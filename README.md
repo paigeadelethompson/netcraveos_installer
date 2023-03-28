@@ -28,9 +28,8 @@ qemu-system-x86_64                                     \
 -drive id=mysdcard,if=none,format=qcow2,file=hdd.qcow2 \
 -device sdhci-pci -device sd-card,drive=mysdcard       \
 -bios /usr/share/OVMF/OVMF_CODE.fd                     \
--netdev user,id=user0                                  \
+-netdev user,id=user0,hostfwd=tcp::65534-:22           \
 -net nic                                               \
--hostfwd=tcp::65534-:22                                \
 -netdev hubport,hubid=0,id=port2,netdev=user0
 ```
 ## Network console 
