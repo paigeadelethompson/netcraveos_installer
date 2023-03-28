@@ -30,7 +30,8 @@ qemu-system-x86_64                                     \
 -bios /usr/share/OVMF/OVMF_CODE.fd                     \
 -netdev user,id=user0                                  \
 -net nic                                               \
+-hostfwd=tcp::65534-:22                                \
 -netdev hubport,hubid=0,id=port2,netdev=user0
 ```
 ## Network console 
-The installer image will request `netcraveos.local` from the DHCP server and mDNS should resolve to it's DHCP leased address, in a perfect scenario: `ssh -i ~/.ssh/id_netcrave_installer root@netcraveos.local`. Note that QEMU requires a `hostfwd` to the user net in order to connect to it's internal ports. 
+The installer image will request `netcraveos.local` from the DHCP server and mDNS should resolve to it's DHCP leased address, in a perfect scenario: `ssh -i ~/.ssh/id_netcrave_installer root@netcraveos.local`. If you're connecting to SSH on QEMU add `-p 65534` to the ssh command.
