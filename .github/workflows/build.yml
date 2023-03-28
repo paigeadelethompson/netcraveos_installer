@@ -1,4 +1,4 @@
-name: build kernel
+name: Build NetcraveOS
 
 on:
   workflow_dispatch:

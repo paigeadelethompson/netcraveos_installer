@@ -1,1 +1,0 @@
-- `DEBIAN_RELEASE=bullseye DEBIAN_VERSION=11.6.0 ARCH=amd64 ./create-debian-usb-key.sh /dev/loop0`
