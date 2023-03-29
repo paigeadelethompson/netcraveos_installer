@@ -35,4 +35,5 @@ qemu-system-x86_64                                     \
 -netdev hubport,hubid=0,id=port2,netdev=user0
 ```
 ## Problems 
-There is no DXE for `sdhci-pci` on OVMF. Installing to it is possible but booting from it is not; have to use `-device file=hdd.qcow2` to boot it. 
+- There is no DXE for `sdhci-pci` on OVMF. Installing to it is possible but booting from it is not; have to use `-device file=hdd.qcow2` to boot it. 
+- This will fail in a very unexpected way if there isn't enough memory provided (~1024M is a fair bet, it has to unpack the ISO in memory, the ISO and all of the installer components, enough to start up the partitioner, at which point the target filesystems become available.) 
