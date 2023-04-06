@@ -78,8 +78,8 @@ set hdmedia="/hdmedia-${DEBIAN_RELEASE}"
 set preseed="/hd-media/preseed"
 set iso="/isos/${ISO_NAME}"
 
-menuentry "Debian ${DEBIAN_RELEASE} ${ARCH} auto install" {
-  linux  \$hdmedia/vmlinuz iso-scan/filename=\$iso priority=critical auto=true preseed/file=\$preseed/preseed.cfg console=tty0 console=ttyS0,115200n8 DEBIAN_FRONTEND=text DEBCONF_DEBUG=5
+menuentry "NetcraveOS 4GB Memory User Install ${DEBIAN_RELEASE} ${ARCH}" {
+  linux  \$hdmedia/vmlinuz iso-scan/filename=\$iso priority=critical auto=true preseed/file=\$preseed/preseed-4gb-user.cfg console=tty0 console=ttyS0,115200n8 DEBIAN_FRONTEND=text DEBCONF_DEBUG=5
   initrd \$hdmedia/initrd.gz
 }
 EOF
