@@ -21,7 +21,7 @@ jobs:
     - name: Install grub EFI
       run: sudo apt update ; sudo apt -y install grub-efi
     - name: Create installer.bin
-      run: truncate -s 600M installer.bin
+      run: truncate -s 4.7G installer.bin
     - name: Create installer.bin
       run: sudo mknod -m 0660 /dev/loop254 b 7 254
     - name: Mount installer.bin as loopback device
@@ -29,7 +29,11 @@ jobs:
     - name: Build base installer image
       run: chmod +x create-debian-usb-key.sh && sudo DEBIAN_RELEASE=$DEBIAN_RELEASE DEBIAN_VERSION=$DEBIAN_VERSION ARCH=$ARCH ./create-debian-usb-key.sh /dev/loop254
     - name: Add custom preseed.cfg
-      run: sudo mount /dev/loop254p3 /mnt && sudo cp preseed.cfg /mnt/preseed && sudo umount /mnt
+      run: sudo mount /dev/loop254p3 /mnt && sudo cp preseed.cfg /mnt/preseed 
+    - name: Copy linux-firmware to image
+      run: mkdir /mnt/linux-firmware && cp -rvp linux-firmware/* /mnt/linux-firmware
+    - name: Unmount root fs 
+      run: sudo umount /mnt
     - name: Disconnect installer.bin
       run: sudo losetup -d /dev/loop254 
     - name: sha256sum installer.bin
