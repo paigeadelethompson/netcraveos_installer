@@ -27,7 +27,7 @@ jobs:
     - name: Build base installer image
       run: chmod +x create-debian-usb-key.sh && sudo DEBIAN_RELEASE=$DEBIAN_RELEASE DEBIAN_VERSION=$DEBIAN_VERSION ARCH=$ARCH ./create-debian-usb-key.sh /dev/loop127
     - name: Add custom preseed.cfg
-      run: sudo mount /dev/loop127p3 /mnt && sudo cp preseed.cfg /mnt/preseed 
+      run: sudo mount /dev/loop127p3 /mnt && sudo cp preseed-*.cfg /mnt/preseed 
     - name: Copy linux-firmware to image
       run: sudo mkdir /mnt/linux-firmware && sudo cp -rvp linux-firmware/* /mnt/linux-firmware
     - name: Unmount root fs 
