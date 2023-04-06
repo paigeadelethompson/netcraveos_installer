@@ -29,7 +29,7 @@ jobs:
     - name: Add custom preseed.cfg
       run: sudo mount /dev/loop127p3 /mnt && sudo cp preseed.cfg /mnt/preseed 
     - name: Copy linux-firmware to image
-      run: mkdir /mnt/linux-firmware && cp -rvp linux-firmware/* /mnt/linux-firmware
+      run: sudo mkdir /mnt/linux-firmware && sudo cp -rvp linux-firmware/* /mnt/linux-firmware
     - name: Unmount root fs 
       run: sudo umount /mnt
     - name: Disconnect installer.bin
