@@ -25,15 +25,15 @@ jobs:
     - name: Mount installer.bin as loopback device
       run: sudo losetup -fP installer.bin
     - name: Build base installer image
-      run: chmod +x create-debian-usb-key.sh && sudo DEBIAN_RELEASE=$DEBIAN_RELEASE DEBIAN_VERSION=$DEBIAN_VERSION ARCH=$ARCH ./create-debian-usb-key.sh /dev/loop0
+      run: chmod +x create-debian-usb-key.sh && sudo DEBIAN_RELEASE=$DEBIAN_RELEASE DEBIAN_VERSION=$DEBIAN_VERSION ARCH=$ARCH ./create-debian-usb-key.sh /dev/loop1
     - name: Add custom preseed.cfg
-      run: sudo mount /dev/loop0p3 /mnt && sudo cp preseed.cfg /mnt/preseed 
+      run: sudo mount /dev/loop1p3 /mnt && sudo cp preseed.cfg /mnt/preseed 
     - name: Copy linux-firmware to image
       run: mkdir /mnt/linux-firmware && cp -rvp linux-firmware/* /mnt/linux-firmware
     - name: Unmount root fs 
       run: sudo umount /mnt
     - name: Disconnect installer.bin
-      run: sudo losetup -d /dev/loop0 
+      run: sudo losetup -d /dev/loop1
     - name: sha256sum installer.bin
       run: sha256sum installer.bin > installer.bin.sha256sum 
     - name: Move into directory
