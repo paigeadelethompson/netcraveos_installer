@@ -25,7 +25,7 @@ jobs:
     - name: Mount installer.bin as loopback device
       run: sudo losetup -fP installer.bin
     - name: Build base installer image
-      run: chmod +x create-debian-usb-key.sh && sudo DEBIAN_RELEASE=$DEBIAN_RELEASE DEBIAN_VERSION=$DEBIAN_VERSION ARCH=$ARCH ./create-debian-usb-key.sh /dev/loop254
+      run: chmod +x create-debian-usb-key.sh && sudo DEBIAN_RELEASE=$DEBIAN_RELEASE DEBIAN_VERSION=$DEBIAN_VERSION ARCH=$ARCH ./create-debian-usb-key.sh /dev/loop0
     - name: Add custom preseed.cfg
       run: sudo mount /dev/loop0p3 /mnt && sudo cp preseed.cfg /mnt/preseed 
     - name: Copy linux-firmware to image
