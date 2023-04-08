@@ -34,6 +34,60 @@ qemu-system-x86_64                                     \
 -net nic                                               \
 -netdev hubport,hubid=0,id=port2,netdev=user0
 ```
+
+### MacOS
+- `hdiutil attach -nomount -imagekey diskimage-class=CRawDiskImage installer_mac.bin`
+
+should give you something like 
+```
+/dev/disk9          	GUID_partition_scheme
+/dev/disk9s1        	Bios Boot Partition
+/dev/disk9s2        	EFI
+/dev/disk9s3        	Linux Filesystem
+/dev/disk9s4        	Microsoft Basic Data
+```
+- MacFUSE is required 
+```
+if [ ! -f e2fsprogs-1.43.4.tar.gz ]; then
+    curl -O -L https://www.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v1.43.4/e2fsprogs-1.43.4.tar.gz
+fi
+tar -zxvf e2fsprogs-1.43.4.tar.gz
+cd e2fsprogs-1.43.4
+./configure --prefix=/opt/gnu --disable-nls
+make
+sudo make install
+sudo make install-libs
+sudo cp /opt/gnu/lib/pkgconfig/* /usr/local/lib/pkgconfig
+cd ../
+export PATH=/opt/gnu/bin:$PATH
+export PKG_CONFIG_PATH=/opt/gnu/lib/pkgconfig:/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+
+cd fuse-ext2
+./autogen.sh
+CFLAGS="-idirafter/opt/gnu/include -idirafter/usr/local/include/osxfuse/" LDFLAGS="-L/opt/gnu/lib -L/usr/local/lib" ./configure
+make
+sudo make install
+```
+- `mkdir ~/mnt`
+- `fuse-ext2 /dev/disk8s3 ~/mnt -o rw+`
+- qemu on MacOS
+
+```
+qemu-system-x86_64                                     \
+-nographic                                             \
+-nodefaults                                            \
+-serial stdio                                          \
+-smp 4                                                 \
+-m 3840M                                               \
+-drive file=hdd.qcow2                                  \
+-netdev user,id=user0,hostfwd=tcp::65534-:22           \
+-net nic                                               \
+-netdev hubport,hubid=0,id=port2,netdev=user0          \
+-drive file=/dev/disk8                                 \
+-drive if=pflash,format=raw,unit=0,file=/opt/homebrew/share/OVMF/OvmfX64/OVMF_CODE.fd,readonly=on   -drive if=pflash,format=raw,unit=1,file=/opt/homebrew/share/OVMF/OvmfX64/OVMF_VARS.fd
+```
+
 ## Problems 
 - There is no DXE for `sdhci-pci` on OVMF. Installing to it is possible but booting from it is not; have to use `-device file=hdd.qcow2` to boot it. 
 - This will fail in a very unexpected way if there isn't enough memory provided (~1024M is a fair bet, it has to unpack the ISO in memory, the ISO and all of the installer components, enough to start up the partitioner, at which point the target filesystems become available.) 
+
