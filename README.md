@@ -40,11 +40,11 @@ qemu-system-x86_64                                     \
 
 should give you something like 
 ```
-/dev/disk9          	GUID_partition_scheme
-/dev/disk9s1        	Bios Boot Partition
-/dev/disk9s2        	EFI
-/dev/disk9s3        	Linux Filesystem
-/dev/disk9s4        	Microsoft Basic Data
+/dev/disk8          	GUID_partition_scheme
+/dev/disk8s1        	Bios Boot Partition
+/dev/disk8s2        	EFI
+/dev/disk8s3        	Linux Filesystem
+/dev/disk8s4        	Microsoft Basic Data
 ```
 - MacFUSE is required 
 ```
