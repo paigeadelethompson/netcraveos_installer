@@ -4,3 +4,6 @@
 [submodule "network-console"]
 	path = network-console
 	url = https://salsa.debian.org/IAmPaigeAT/network-console.git
+[submodule "debian-cd"]
+	path = debian-cd
+	url = https://salsa.debian.org/arnaudr/debian-cd.git
