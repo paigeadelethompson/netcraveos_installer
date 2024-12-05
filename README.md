@@ -1,3 +1,6 @@
+# Shelved
+This project is unmaintained until further notice 
+
 # Warning 
 This image will erase anything already installed, use with caution. 
 
